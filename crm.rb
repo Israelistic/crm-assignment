@@ -3,8 +3,8 @@ require_relative "contact"
 # require 'pry'
 class Crm
 
-  def initialize
-
+  def initialize(name)
+    @name = name
   end
 
   def main_menu
@@ -35,7 +35,7 @@ add, modify, delete, display all, search by attribute, and exit.
     when 1 then add_new_contact
     when 2 then modify_existing_contact
     when 3 then delete_contact
-    when 4 then display_all_contacts
+    when 4 then p Contact.all
     when 5 then search_by_attribute
     when 6 then delete_all
     when 7 then exit
@@ -43,7 +43,28 @@ add, modify, delete, display all, search by attribute, and exit.
   end
 
     def modify_existing_contact
-
+      # puts "Enter the ID for the user you want to modify"
+      # user_id = gets.to_i
+      puts "what is the name of the user first, lastname, email you would like to change"
+      value = gets.chomp
+      modify_menu
+      modify_attribute = gets.chomp
+      if modify_attribute == "4"
+          return
+      else
+        puts "enter the new value:"
+        new_value = gets.chomp
+        Contact.find_by(modify_attribute, value).update(modify_attribute, new_value)
+      # Contact.find(user_id)
+        end
+    end
+    def modify_menu
+      puts "\e[H\e[2J"
+      puts "please select an attribute to modify:"
+      puts "[1] First_name"
+      puts "[2] Last_name"
+      puts "[3] Email"
+      puts "[4] back"
     end
 
 =begin
@@ -65,7 +86,7 @@ As a user, if I select add I am prompted to enter a
     p "enter note: optional"
     note = gets.chomp
 
-    Contact.create(first_name, last_name, email, note = 'N/A')
+  p  Contact.create(first_name, last_name, email, note = 'N/A')
   end
 
 
@@ -73,29 +94,38 @@ As a user, if I select add I am prompted to enter a
 
   end
 
-  def display_all_contacts
-    return @contacts
-  end
+
 
   def search_by_attribute
     search_by_menu
-    contact_attribute = gets.to_i
-    if (contact_attribute == 5)
+    contact_attribute = gets.chomp
+    puts "what is the name of the user first, lastname, email, note"
+    user_value = gets.chomp
+    puts "\e[H\e[2J"
+  p  Contact.find_by(contact_attribute, user_value)
+
+    if (contact_attribute == 4 )
+        Contact.find_by(contact_attribute, contact.update(contact_attribute, new_value))
+    elsif (contact_attribute == 5)
        print_main_menu
     end
   end
 
 
   def search_by_menu
+    puts "\e[H\e[2J"
     puts "please select an attribute to search by:"
     puts "[1] First_name"
     puts "[2] Last_name"
     puts "[3] Email"
     puts "[4] full_name"
     puts "[5] back"
-
+  end
+  def name
+    return @name
+  end
 end
 
-crm1= Crm.new
+crm1= Crm.new("CRM.APP")
 crm1.main_menu
 p Contact.find(100)

@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
+require 'pry'
 class Contact
 @@contacts = []
 @@next_id = 100
   # This method should initialize the contact's attributes
   def initialize(first_name, last_name, email, note = 'N/A')
-      @firstname = first_name
-      @lastname = last_name
+      @first_name = first_name
+      @last_name = last_name
       @email = email
       @note = note
       @id = @@next_id
@@ -41,13 +42,13 @@ class Contact
   # and then make the appropriate change to the contact
   def update(attribute,new_value)
     case attribute
-    when "fist_name"
+    when "1"
       @first_name = new_value
-    when "last_name"
+    when "2"
       @last_name = new_value
-    when "email"
+    when "3"
       @email = new_value
-    when "note"
+    when "4"
       @note = new_value
     end
   end
@@ -58,32 +59,32 @@ class Contact
   # eg. searching for 'first_name', 'Betty' should return the first contact named Betty
   def self.find_by(attribute, value)
     case attribute
-    when 1 then
-      @@contacts.each do |contact|
-        if contact.fist_name.downcase == value.downcase
+      when "1" then
+        @@contacts.each do |contact| #binding.pry
+          if contact.first_name.downcase == value.downcase
           return contact
+          end
         end
+      when "2" then
+        @@contacts.each do |contact|
+          if contact.last_name.downcase == value.downcase
+          return contact
+          end
       end
-    when 2 then
-      @@contacts.each do |contact|
-        if contact.last_name.downcase == value.downcase
+      when "3" then
+        @@contacts.each do |contact|
+          if contact.email.downcase == value.downcase
           return contact
-        end
+          end
       end
-    when 3 then
-      @@contacts.each do |contact|
-        if contact.full_name.downcase == value.downcase
-          return contact
-        end
-      end
-    when 4 then
-      @@contacts.each do |contact|
-        if contact.email.downcase == value.downcase
-          return contact
-        end
+      # when "4" then
+      #   @@contacts.each do |contact|
+      #     if contact.full_name(first_name, last_name).downcase == value.downcase
+      #     return contact
+      #     end
+      #   end
       end
     end
-
   # This method should delete all of the contacts
   def self.delete_all
     @@contacts.each { | contact |  contacts.delete_at(contact)}
@@ -116,14 +117,18 @@ class Contact
   def email
     return @email
   end
+
   def note
     return @note
+  end
+  def display_all_contacts
+    return @contacts
   end
 
 end
 
 
-p Contact.create("Haggi", "Lerman","haggai@gmail.com")
+p Contact.create("Haggai", "Lerman","haggai@gmail.com")
 p Contact.create("Daniel", "Moniz", "daniel@gmail.com")
 puts
 puts "===self.find==="
@@ -133,4 +138,4 @@ p Contact.find(100)
 
 
 
-puts "====SELF===="
+# puts "====SELF===="
